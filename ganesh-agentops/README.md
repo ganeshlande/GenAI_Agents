@@ -1,10 +1,41 @@
 # Ganesh AgentOps — AI Agent Orchestration Platform
 
 > **Ganesh AgentOps — AI Engineer Challenge** · Ganesh Lande
->
-> A production-grade multi-agent orchestration platform that investigates payment failures, routes work through a configurable agent pipeline, surfaces every step in a real-time dashboard, and optionally accepts queries from a Telegram bot.
 
 ---
+
+## Summary
+
+Payment operations teams handle high volumes of failures, disputes, and compliance reviews — each requiring a different specialist, in a defined sequence, with a full audit trail. Manual handoffs are slow, error-prone, and hard to observe.
+
+**Ganesh AgentOps** is a production-grade multi-agent orchestration platform that solves this by modelling payment workflows as directed graphs of specialised AI agents. A single payment query — submitted via the web UI or Telegram — is automatically routed through a configurable pipeline:
+
+```
+Support Intake → Payment Investigator → Risk & Compliance → Resolution
+```
+
+Conditional routing handles fraud escalation, tool calls query deterministic mock APIs, and every agent action is streamed live and persisted for audit.
+
+### What makes it production-ready
+
+| Dimension | Implementation |
+|---|---|
+| **Orchestration** | LangGraph `StateGraph` built dynamically from DB records; pure-Python fallback requires zero extra dependencies |
+| **Configurable agents** | Per-agent model, tool allowlist, guardrails, token/cost/step limits — all stored in SQLite, no code changes to reconfigure |
+| **Real-time observability** | Server-Sent Events stream every `agent_start`, `tool_call`, `tool_result`, and `workflow_end` event to the frontend as they happen |
+| **Persistent audit trail** | All messages and structured runtime logs written to SQLite; browsable per-run in the UI |
+| **Cost tracking** | Per-agent token counts and USD cost estimates; exact usage metadata when a real API key is present |
+| **Guardrails** | Four enforcement layers: step limit, output content filtering, final-response structure check, tool allowlist |
+| **Telegram integration** | Long-poll bot accepts free-text payment queries, triggers the full pipeline, replies with an HTML investigation report |
+| **Test coverage** | 226 tests across 11 files — runtime, tools, CRUD, SSE, templates — all passing with zero API keys |
+
+### One-command start
+
+```bash
+cp .env.example .env          # no edits needed for the mock-LLM demo
+docker compose up --build
+# Frontend → http://localhost:3000   API → http://localhost:8000
+```
 
 **Demo Video:** _\<insert link\>_
 
