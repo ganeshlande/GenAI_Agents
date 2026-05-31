@@ -1,0 +1,29 @@
+# ── Web framework ─────────────────────────────────────────────────────────────
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+
+# ── Database ──────────────────────────────────────────────────────────────────
+sqlalchemy==2.0.36
+
+# ── Validation & settings ─────────────────────────────────────────────────────
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-dotenv==1.0.1
+
+# ── HTTP client (used for Telegram long-poll and internal requests) ────────────
+httpx==0.28.0
+python-multipart==0.0.12
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest==8.3.4
+pytest-asyncio==0.24.0
+
+# ── Optional: real LLM support ────────────────────────────────────────────────
+# Uncomment to enable live OpenAI / Anthropic calls.
+# The platform works fully without these — MockLLM is used when they are absent.
+#
+# langgraph==0.2.56
+# langchain==0.3.9
+# langchain-core==0.3.29
+# langchain-openai==0.2.12
+# langchain-anthropic==0.3.1
